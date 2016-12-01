@@ -1,2 +1,3 @@
-I am amazing please read me a lot 
+I am amazing please read me a lot.
+
 ok.
