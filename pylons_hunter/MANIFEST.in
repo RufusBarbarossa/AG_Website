@@ -1,0 +1,3 @@
+include pylons_hunter/config/deployment.ini_tmpl
+recursive-include pylons_hunter/public *
+recursive-include pylons_hunter/templates *
