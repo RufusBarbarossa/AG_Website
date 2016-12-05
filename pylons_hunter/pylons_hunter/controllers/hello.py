@@ -2,7 +2,6 @@ import logging
 
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
-
 from pylons import app_globals
 from pylons import config
 from routes import url_for
@@ -17,7 +16,7 @@ class HelloController(BaseController):
         # Return a rendered template
         #return render('/hello.mako')
         # or, return a string
-        return '<h1>Main page!</h1>'
+        return '<b>Hey-o</b>'
 
     def environ(self):
         result = '<html><body><h1>Environ</h1>'
@@ -25,5 +24,7 @@ class HelloController(BaseController):
             result += '%s: %r <br />'%(key, value)
         result += '</body></html>'
         return result
-    def testpage(self):
-        return '<b>Welcome to the testpage where I test things</b>'
+
+    def app_globals_test(self):
+        app_globals.visits += 1
+        return "You are visitor number %s." % app_globals.visits

@@ -16,3 +16,4 @@ class Globals(object):
 
         """
         self.cache = CacheManager(**parse_cache_config_options(config))
+        self.visits = 0
