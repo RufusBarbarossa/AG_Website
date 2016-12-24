@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Greetings</title>
+</head>
+<body>
+    <h1>Greetings</h1>
+    <p>
+% if hasattr(c, 'name'):
+    Hello ${c.name}!
+% else:
+    Welcome Guest
+% endif
+    </p>
+
+<p>
+% for key in context.keys():
+The key is <tt>${key}</tt>, the value is ${str(context.get(key))}. <br />
+% endfor
+</p>
+</body>
+</html>
