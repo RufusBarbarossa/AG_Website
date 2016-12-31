@@ -20,23 +20,23 @@
   <li class="w3-hide-large w3-opennav w3-right">
     <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
   </li>
-  <li><a href="#" class="w3-hover-none w3-hover-text-grey w3-padding-large">HOME</a></li>
-  <li class="w3-hide-small w3-hide-medium"><a href="#forums" class="w3-padding-large">FORUMS</a></li>
-  <li class="w3-hide-small w3-hide-medium"><a href="#events" class="w3-padding-large">EVENTS</a></li>
-  <li class="w3-hide-small w3-hide-medium"><a href="#merch" class="w3-padding-large">MERCH</a></li>
-  <li class="w3-hide-small w3-hide-medium"><a href="#contact" class="w3-padding-large">CONTACT US</a></li>
-% if c.logged_in:
+  <li><a href="${h.url(controller='index', action='home')}" class="w3-hover-none w3-hover-text-grey w3-padding-large">HOME</a></li>
+  <li class="w3-hide-small w3-hide-medium"><a href="${h.url(controller='forums', action='index')}" class="w3-padding-large">FORUMS</a></li>
+  <li class="w3-hide-small w3-hide-medium"><a href="${h.url(controller='index', action='events')}" class="w3-padding-large">EVENTS</a></li>
+  <li class="w3-hide-small w3-hide-medium"><a href="${h.url(controller='index', action='merch')}" class="w3-padding-large">MERCH</a></li>
+  <li class="w3-hide-small w3-hide-medium"><a href="${h.url(controller='index', action='contact')}" class="w3-padding-large">CONTACT US</a></li>
+% if h.getLoggedIn():
   <li class="w3-hide-small w3-hide-medium w3-dropdown-hover w3-right">
-    <a href="javascript:void(0)" class="w3-hover-none w3-padding-large w3-right" title="User Settings">${c.UN} <i class="fa fa-caret-down"></i></a>     
+    <a href="javascript:void(0)" class="w3-hover-none w3-padding-large w3-right" title="User Settings">${h.getUser()} <i class="fa fa-caret-down"></i></a>     
     <div class="w3-dropdown-content w3-gray w3-card-4">
-      <a href="#userset">Profile Settings</a>
-      <a href="#not">Notifications</a>
-      <a href="#logout">Log Out</a>
+      <a href="${h.url(controller='userinfo', action='user_settings')}">Profile Settings</a>
+      <a href="${h.url(controller='userinfo', action='notifs')}">Notifications</a>
+      <a href="${h.url(controller='userinfo', action='logout')}">Log Out</a>
     </div>
   </li>
 % else:
-  <li class="w3-hide-small w3-hide-medium w3-right"><a href="#Log_in" class="w3-padding-large">LOG IN</a></li>
-  <li class="w3-hide-small w3-hide-medium w3-right"><a href="#Register" class="w3-padding-large">REGISTER</a></li>
+  <li class="w3-hide-small w3-hide-medium w3-right"><a href="${h.url(controller='userinfo', action='login')}" class="w3-padding-large">LOG IN</a></li>
+  <li class="w3-hide-small w3-hide-medium w3-right"><a href="${h.url(controller='userinfo', action='register')}" class="w3-padding-large">REGISTER</a></li>
 % endif
 </ul>
 </div>
@@ -44,17 +44,17 @@
 <!-- Navbar on small screens -->
 <div id="tinyNav" class="w3-hide w3-hide-large w3-top" style="margin-top:46px">
   <ul class="w3-navbar w3-left-align w3-black">
-    <li><a class="w3-padding-large" href="#forums">FORUMS</a></li>
-    <li><a class="w3-padding-large" href="#events">EVENTS</a></li>
-    <li><a class="w3-padding-large" href="#merch">MERCH</a></li>
-    <li><a class="w3-padding-large" href="#contact">CONTACT US</a></li>
-% if c.logged_in:
-    <li><a class="w3-padding-large" href="#userset">USER SETTINGS</a></li>
-    <li><a class="w3-padding-large" href="#usernot">NOTIFICATIONS</a></li>
-    <li><a class="w3-padding-large w3-red w3-hover-pale-red" href="#logout">LOG OUT</a></li>
+    <li><a class="w3-padding-large" href="${h.url(controller='forums', action='index')}">FORUMS</a></li>
+    <li><a class="w3-padding-large" href="${h.url(controller='index', action='events')}">EVENTS</a></li>
+    <li><a class="w3-padding-large" href="${h.url(controller='index', action='merch')}">MERCH</a></li>
+    <li><a class="w3-padding-large" href="${h.url(controller='index', action='contact')}">CONTACT US</a></li>
+% if h.getLoggedIn():
+    <li><a class="w3-padding-large" href="{h.url(controller='userinfo', action='user_settings')}">USER SETTINGS</a></li>
+    <li><a class="w3-padding-large" href="${h.url(controller='userinfo', action='notifs')}">NOTIFICATIONS</a></li>
+    <li><a class="w3-padding-large w3-red w3-hover-pale-red" href="${h.url(controller='userinfo', action='logout')}">LOG OUT</a></li>
 % else:
-    <li><a class="w3-padding-large w3-green w3-hover-pale-green" href="#register">REGISTER</a></li>
-    <li><a class="w3-padding-large w3-green w3-hover-pale-green" href="#login">LOG IN</a></li>
+    <li><a class="w3-padding-large w3-green w3-hover-pale-green" href="${h.url(controller='userinfo', action='login')}">REGISTER</a></li>
+    <li><a class="w3-padding-large w3-green w3-hover-pale-green" href="${h.url(controller='userinfo', action='register')}">LOG IN</a></li>
 % endif
   </ul>
 </div>
