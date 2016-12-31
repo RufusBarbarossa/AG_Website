@@ -24,6 +24,7 @@ web_src/lib/app_globals.py
 web_src/lib/base.py
 web_src/lib/helpers.py
 web_src/model/__init__.py
+web_src/model/meta.py
 web_src/public/bg.png
 web_src/public/favicon.ico
 web_src/public/index.html

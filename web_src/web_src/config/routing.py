@@ -10,7 +10,7 @@ def make_map(config):
     """Create, configure and return the routes Mapper"""
     map = Mapper(directory=config['pylons.paths']['controllers'],
                  always_scan=config['debug'])
-    map.minimization = False
+    map.minimization = True
     map.explicit = False
 
     # The ErrorController route (handles 404/500 error pages); it should
@@ -19,6 +19,20 @@ def make_map(config):
     map.connect('/error/{action}/{id}', controller='error')
 
     # CUSTOM ROUTES HERE
+
+    map.connect('/login', controller='userinfo', action='login')   
+    map.connect('/settings', controller='userinfo', action='user_settings')
+    map.connect('/logout', controller='userinfo', action='logout')
+    map.connect('/register', controller='userinfo', action='register')
+    map.connect('/notifications', controller='userinfo', action='notifs')
+    map.connect('/settings/{action}', controller='userinfo')
+    map.connect('/notifications/{action}', controller='userinfo')
+
+
+    map.connect('/forums', controller='forums', actions='index')
+
+    map.connect('/', controller='index', action='home')
+    map.connect('/{action}', controller='index')
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
