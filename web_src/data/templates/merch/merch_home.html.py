@@ -5,9 +5,9 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1483165405.70674
+_modified_time = 1483243072.538753
 _enable_loop = True
-_template_filename = '/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/merch/merch_home.html'
+_template_filename = '/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/merch/merch_home.html'
 _template_uri = 'merch/merch_home.html'
 _source_encoding = 'utf-8'
 from markupsafe import escape
@@ -49,6 +49,6 @@ def render_title(context):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"33": 2, "34": 3, "40": 3, "44": 3, "50": 44, "28": 0}, "uri": "merch/merch_home.html", "filename": "/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/merch/merch_home.html"}
+{"source_encoding": "utf-8", "line_map": {"33": 2, "34": 3, "40": 3, "44": 3, "50": 44, "28": 0}, "uri": "merch/merch_home.html", "filename": "/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/merch/merch_home.html"}
 __M_END_METADATA
 """

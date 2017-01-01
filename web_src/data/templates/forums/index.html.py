@@ -5,9 +5,9 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1483165277.66875
+_modified_time = 1483243074.743059
 _enable_loop = True
-_template_filename = '/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/forums/index.html'
+_template_filename = '/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/forums/index.html'
 _template_uri = 'forums/index.html'
 _source_encoding = 'utf-8'
 from markupsafe import escape
@@ -49,6 +49,6 @@ def render_title(context):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"33": 2, "34": 3, "40": 3, "44": 3, "50": 44, "28": 0}, "uri": "forums/index.html", "filename": "/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/forums/index.html"}
+{"source_encoding": "utf-8", "line_map": {"33": 2, "34": 3, "40": 3, "44": 3, "50": 44, "28": 0}, "uri": "forums/index.html", "filename": "/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/forums/index.html"}
 __M_END_METADATA
 """
