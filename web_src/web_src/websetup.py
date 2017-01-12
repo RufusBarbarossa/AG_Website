@@ -4,6 +4,8 @@ import logging
 from web_src.config.environment import load_environment
 from web_src.model.meta import Session, Base
 
+from web_src import model
+
 log = logging.getLogger(__name__)
 
 def setup_app(command, conf, vars):
@@ -13,3 +15,58 @@ def setup_app(command, conf, vars):
 
     # Create the tables if they don't already exist
     Base.metadata.create_all(bind=Session.bind)
+
+    log.info("Setting Up Categories")
+    lol = model.Category()
+    lol.title = u"League of Legends"
+
+    overwatch = model.Category()
+    overwatch.title = u"Overwatch"
+
+    vain = model.Category()
+    vain.title = u"Vain Glory"
+
+    Session.add_all([lol, overwatch, vain])
+    Session.commit()
+
+    log.info("Completed Setting up Categories")
+
+    log.info("Setting Up Forums")
+    lol_forum = model.Forum()
+    lol_forum.categoryid = lol.id
+    lol_forum.title = u"General"
+    lol_forum.sdesc = u"General Talk about League of Legends"
+    lol_forum.ldesc = u""
+
+    guide_forum = model.Forum()
+    guide_forum.categoryid = lol.id
+    guide_forum.title = u"Guides"
+    guide_forum.sdesc = u"League of Legends Guides"
+    guide_forum.ldesc = u""
+
+    ow_forum = model.Forum()
+    ow_forum.categoryid = overwatch.id
+    ow_forum.title = u"General"
+    ow_forum.sdesc = u"General Talk about Overwatch"
+    ow_forum.ldesc = u""
+
+    owguide_forum = model.Forum()
+    owguide_forum.categoryid = overwatch.id
+    owguide_forum.title = u"Guides"
+    owguide_forum.sdesc = u"Owerwatch Guides"
+    owguide_forum.ldesc = u""
+
+    vain_forum = model.Forum()
+    vain_forum.categoryid = vain.id
+    vain_forum.title = u"General"
+    vain_forum.sdesc = u"General Talk about Vain Glory"
+    vain_forum.ldesc = u""
+
+    vainguide_forum = model.Forum()
+    vainguide_forum.categoryid = vain.id
+    vainguide_forum.title = u"Guides"
+    vainguide_forum.sdesc = u"Vain Glory Guides"
+    vainguide_forum.ldesc = u""
+
+    Session.add_all([lol_forum, guide_forum, ow_forum, owguide_forum, vain_forum, vainguide_forum])
+    Session.commit()

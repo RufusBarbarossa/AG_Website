@@ -5,9 +5,9 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1483243050.321825
+_modified_time = 1484238448.136153
 _enable_loop = True
-_template_filename = u'/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/base.html'
+_template_filename = u'/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/base.html'
 _template_uri = u'/base.html'
 _source_encoding = 'utf-8'
 from markupsafe import escape
@@ -73,7 +73,9 @@ def render_body(context,**pageargs):
             __M_writer(u'">LOG IN</a></li>\n')
         __M_writer(u'  </ul>\n</div>\n\n')
         __M_writer(escape(self.body()))
-        __M_writer(u'\n\n</body>\n\n<script>\n// Used to toggle the menu on small screens when clicking on the menu button\nfunction myFunction() {\n    var x = document.getElementById("tinyNav");\n    if (x.className.indexOf("w3-show") == -1) {\n        x.className += " w3-show";\n    } else { \n        x.className = x.className.replace(" w3-show", "");\n    }\n}\n\n</script>\n</html>\n')
+        __M_writer(u'\n\n</body>\n\n<script>\n// Used to toggle the menu on small screens when clicking on the menu button\nfunction myFunction() {\n    var x = document.getElementById("tinyNav");\n    if (x.className.indexOf("w3-show") == -1) {\n        x.className += " w3-show";\n    } else { \n        x.className = x.className.replace(" w3-show", "");\n    }\n}\n\nfunction __goto__(url) {\n  console.log(url); \n  window.location = url;\n}\n\n')
+        __M_writer(escape(self.scripts()))
+        __M_writer(u'\n\n</script>\n</html>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -81,6 +83,6 @@ def render_body(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"17": 0, "24": 1, "25": 13, "26": 13, "27": 23, "28": 23, "29": 24, "30": 24, "31": 25, "32": 25, "33": 26, "34": 26, "35": 27, "36": 27, "37": 28, "38": 29, "39": 30, "40": 30, "41": 32, "42": 32, "43": 33, "44": 33, "45": 34, "46": 34, "47": 37, "48": 38, "49": 38, "50": 38, "51": 39, "52": 39, "53": 41, "54": 47, "55": 47, "56": 48, "57": 48, "58": 49, "59": 49, "60": 50, "61": 50, "62": 51, "63": 52, "64": 53, "65": 53, "66": 54, "67": 54, "68": 55, "69": 56, "70": 56, "71": 56, "72": 57, "73": 57, "74": 59, "75": 62, "76": 62, "82": 76}, "uri": "/base.html", "filename": "/home/pi/Documents/My Projects/MainAG/web_src/web_src/templates/base.html"}
+{"source_encoding": "utf-8", "line_map": {"17": 0, "24": 1, "25": 13, "26": 13, "27": 23, "28": 23, "29": 24, "30": 24, "31": 25, "32": 25, "33": 26, "34": 26, "35": 27, "36": 27, "37": 28, "38": 29, "39": 30, "40": 30, "41": 32, "42": 32, "43": 33, "44": 33, "45": 34, "46": 34, "47": 37, "48": 38, "49": 38, "50": 38, "51": 39, "52": 39, "53": 41, "54": 47, "55": 47, "56": 48, "57": 48, "58": 49, "59": 49, "60": 50, "61": 50, "62": 51, "63": 52, "64": 53, "65": 53, "66": 54, "67": 54, "68": 55, "69": 56, "70": 56, "71": 56, "72": 57, "73": 57, "74": 59, "75": 62, "76": 62, "77": 82, "78": 82, "84": 78}, "uri": "/base.html", "filename": "/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/base.html"}
 __M_END_METADATA
 """

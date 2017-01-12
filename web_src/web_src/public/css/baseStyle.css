@@ -2,6 +2,42 @@ body {
     background-color: powderblue;
 }
 
+table.forums {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    margin-left: 35%;
+    table-layout: fixed;
+    width: 30%;
+    margin-right: 35%;
+}
+
+td.forums, th.forums {
+    border: 1px solid #dddddd;
+    text-align: left;
+    width: 10%
+    padding: 8px;
+}
+
+@media screen and (max-width: 600px){
+    table.forums {
+        width:100%;
+        margin-left: 0%;
+    }
+    td.forums, th.forums {
+        width: 100/3%;
+    }
+}
+
+tr.forums:hover td{
+    background-color: green;
+}
+tr.forums:nth-child(even) {
+    background-color: #dddddd;
+}
+tr.forums:nth-child(odd) {
+    background-color: #F1F1F1;
+}
+
 ul.topnav {
     list-style-type: none;
     margin: 0;
