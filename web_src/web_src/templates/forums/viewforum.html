@@ -1,0 +1,154 @@
+<%inherit file="/base.html"/>\
+
+<%def name="title()">Forums</%def>
+
+<%def name="buildrow(page, counter)">
+    <% _class_ = "forum-even" if counter%2 == 0 else "forum-odd" %>
+    <% _first_ = "forum-border-top" if counter==1 else "" %>
+
+    <tr class="forum ${_class_} ${_first_}">
+        <td class="forum" style="width: 5%" rowspan=3></td>
+        <td class="forum" style="width: 95%">
+            <a class="threadlink", href="${h.url(controller='forums', action='view', id=page.id)}">${page.title}</a>
+        </td>
+    </tr>
+    <tr class="forum ${_class_}">
+        <td class="forum" style="text-align: left; width: 5%">
+            Submitted 
+            <a onmouseover="fullTime(this, '${page.posted.strftime('%a, %b %d %Y, %H:%M:%S %p')}')" onmouseout="shortTime(this, '${page.posted.strftime('%a, %b %d %Y')}')">
+                ${page.posted.strftime('%a, %b %d %Y')}
+            </a>
+% if page.edited:
+            (last edited 
+            <a onmouseover="fullTime(this, '${page.lastModified.strftime('%a, %b %d %Y, %H:%M:%S %p')}')" 
+                onmouseout="shortTime(this, '${page.lastModified.strftime('%a, %b %d %Y')}')">
+                ${page.lastModified.strftime('%a, %b %d %Y')}
+            </a>
+            ) 
+% endif
+            by ${page.poster}</td>
+    </tr>
+    <tr class="forum forum-border-bottom ${_class_}">
+        <td class="forum">${len(page.comments)} comments</td>
+    </tr>
+</%def>
+
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+<h1 style="text-align: center">${c.forum.title}</h1>
+
+<p style="text-align: center">${c.forum.sdesc}</p>
+
+
+% if c.empty and c.search_text == '':
+<br /> <br />
+<p style="font-size: 2.5em; text-align: center"> There are no threads in this forum. Contribute by creating a thread <a href="${'' + h.url(controller='forums', action='new') + '?forumid=' + str(c.forum.id)}">here</a></p>
+% else:
+<div>
+<ul class="w3-navbar w3-grey w3-left-align" style="margin-left: 2%; width: 96%;">
+  <li class="w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  </li>
+  <li class="w3-hide-small w3-hide-medium"><a href="${h.url(controller='forums', action='new') + '?forumid=' + str(c.forum.id)}" class="w3-padding-large">New Thread</a></li>
+  <li class="w3-hide-small w3-hide-medium" style="padding-top: 12px; padding-bottom: 12px; padding-left: 24px; padding-right: 6px">Sort By:</li>
+  <li id = "new" class="w3-hide-small w3-hide-medium">
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id)}" class="w3-padding-large" style="padding-left: 6px">
+        New
+    </a>
+  </li>
+  <li id="best", class="w3-hide-small w3-hide-medium">
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?viewtype=best'}" class="w3-padding-large">
+        Best
+    </a>
+  </li>
+  <li class="w3-hide-small w3-hide-medium w3-right">
+    <form>
+        <input class="searchbar" type="text" name="search" placeholder="${'Search..' if c.search_text == '' else c.search_text}">
+    </form>
+   </li>
+</ul>
+<script>
+
+var active = "${c.active}";
+var activeElem = document.getElementById(active);
+activeElem.className += " w3-black";
+
+</script>
+
+</div>
+% if not c.empty:
+<div>
+<table class="paginator forum">
+<% counter=0 %>
+% for page in c.paginator:
+	<% counter += 1 %>
+    ${buildrow(page, counter)}
+% endfor
+</table>
+
+<% _search_first_ = '' if c.search_text == '' else '?search='+c.search_text %>
+<% _search_ = '' if c.search_text == '' else '&search='+c.search_text %>
+
+<p style="margin-left:3%">
+% if c.paginator.page != 1:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + _search_first_}"><<</a>
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page-1) + _search_}"><</a>
+% endif
+    Showing threads ${c.paginator.first_item} through ${c.paginator.last_item} of ${c.paginator.item_count}
+% if c.paginator.page != c.paginator.last_page:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page+1) + _search_}">></a>
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.last_page) + _search_}">>></a>
+% endif
+</p>
+
+<p style="margin-left:3%">
+
+% if c.paginator.page == 1:
+    <!-- Do Nothing -->
+% elif c.paginator.page == 2:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=1' + _search_}">1</a> 
+% elif c.paginator.page == 3:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=1' + _search_}">1</a> 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=2' + _search_}">2</a> 
+% else:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=1' + _search_}">1</a> .. 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page-2) + _search_}">${c.paginator.page-2}</a> 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page-1) + _search_}">${c.paginator.page-1}</a> 
+% endif
+
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page) + _search_}">[${c.paginator.page}]</a> 
+
+% if c.paginator.page == c.paginator.last_page:
+    <!-- Do Nothing -->
+% elif c.paginator.page == c.paginator.last_page - 1:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.last_page) + _search_}">${c.paginator.last_page}</a>
+% elif c.paginator.page == c.paginator.last_page - 2:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.last_page-1) + _search_}">${c.paginator.last_page-1}</a> 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.last_page) + _search_}">${c.paginator.last_page}</a>
+% else:
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page+1) + _search_}">${c.paginator.page+1}</a> 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.page+2) + _search_}">${c.paginator.page+2}</a> .. 
+    <a href="${h.url(controller='forums', action='viewforum', id=c.forum.id) + '?page=' + str(c.paginator.last_page) + _search_}">${c.paginator.last_page}</a>
+% endif
+
+</p>
+</div>
+% endif
+%endif
+</div>
+
+
+<%def name="scripts()"> 
+<!-- <script> -->
+
+function fullTime(el, modification) {
+    el.innerHTML = modification
+}
+
+function shortTime(el, modification) {
+    setTimeout(function () {
+        el.innerHTML = modification
+    }, 250);
+}
+
+</%def>

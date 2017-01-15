@@ -70,3 +70,31 @@ def setup_app(command, conf, vars):
 
     Session.add_all([lol_forum, guide_forum, ow_forum, owguide_forum, vain_forum, vainguide_forum])
     Session.commit()
+
+    #For development only
+
+    test_page = model.Page()
+    test_page.title = "Testing Page"
+    test_page.content = "Hi im Gosu"
+    test_page.poster = "RufusBarbarossa"
+    test_page.forumid = lol_forum.id
+    Session.add(test_page)
+    Session.commit()
+
+    comment1 = model.Comment()
+    comment1.content = "Test 1"
+    comment1.uname = "RufusBarbarossa"
+    comment1.pageid = test_page.id
+    Session.add(comment1)
+    Session.commit()
+
+    comment2 = model.Comment()
+    comment2.content = "Test 2"
+    comment2.uname = "The Schiphtur"
+    comment2.pageid = test_page.id
+    comment2.ownerid = comment1.id
+    Session.add(comment2)
+    Session.commit()
+
+    print("" + str(comment1.replies))
+    print("" + str(comment1.ownerid))

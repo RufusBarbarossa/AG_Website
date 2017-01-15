@@ -1,0 +1,40 @@
+<%inherit file="/base.html"/>\
+
+<%def name="title()">Forums</%def>
+
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+<h1 style="text-align: center">New Thread</h1>
+
+${h.form_start(h.url(controller='forums', action='create'), method="post", class_='newpage', id='newpage')}
+	${h.field(
+    	"Title",
+    	h.text(name='title'),
+    	required=True,
+	)}
+	${h.field(
+    	"Forum ID ",
+    	h.text(name='forumid', value=c.forumid),
+    	required=True,
+    	field_desc = "The forum that this thread will be a part of"
+	)}
+	${h.field(
+    	"Content ",
+    	h.textarea(name='content', rows=7, class_="newpage"),
+    	required=True,
+    	field_desc = 'The text that will make up the body of the page'
+	)}
+    ${h.field(field=h.submit(value="Create Page", name='submit'))}
+${h.form_end()}
+
+</div>
+
+<%def name="scripts()"> 
+<!-- <script> -->
+
+function findWidth() {
+	var position = document.getElementById('newpage').getBoundingClientRect();
+	console.log(position.width);
+}
+
+</%def>

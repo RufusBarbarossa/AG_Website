@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1484238448.136153
+_modified_time = 1484464078.568016
 _enable_loop = True
 _template_filename = u'/home/astanesc/Documents/AG_Web/AG_Website/web_src/web_src/templates/base.html'
 _template_uri = u'/base.html'
@@ -21,7 +21,7 @@ def render_body(context,**pageargs):
         h = context.get('h', UNDEFINED)
         self = context.get('self', UNDEFINED)
         __M_writer = context.writer()
-        __M_writer(u'<!DOCTYPE html>\n<html>\n<head>\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <link rel="stylesheet" href="css/baseStyle.css">\n  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">\n  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">\n  <style>\n    body {font-family: "Lato", sans-serif}\n    .mySlides {display: none}\n  </style>\n  <title>')
+        __M_writer(u'<!DOCTYPE html>\n<html>\n<head>\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <link rel="stylesheet" href="/css/baseStyle.css">\n  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">\n  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">\n  <style>\n    body {font-family: "Lato", sans-serif}\n    .mySlides {display: none}\n  </style>\n  <title>')
         __M_writer(escape(self.title()))
         __M_writer(u'</title>\n</head>\n\n<body>\n<!-- Navbar -->\n<div class="w3-top">\n<ul class="w3-navbar w3-black w3-card-2 w3-left-align">\n  <li class="w3-hide-large w3-opennav w3-right">\n    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>\n  </li>\n  <li><a href="')
         __M_writer(escape(h.url(controller='index', action='home')))

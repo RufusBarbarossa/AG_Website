@@ -37,8 +37,11 @@ page_table = schema.Table('page', Base.metadata,
         schema.ForeignKey('forum.id'), nullable=False),
     schema.Column('content', types.Text(), nullable=False),
     schema.Column('posted', types.DateTime(), default=now()),
+    schema.Column('edited', types.Boolean(), default=False),
     schema.Column('lastModified', types.DateTime(), default=now()),
+    schema.Column('poster', types.Unicode(255), nullable=False),
     schema.Column('title', types.Unicode(255), default=u'Untitled Page'),
+    schema.Column('upvotes', types.Integer, default=0),
 )
 
 comment_table = schema.Table('comment', Base.metadata,
@@ -46,9 +49,12 @@ comment_table = schema.Table('comment', Base.metadata,
         schema.Sequence('comment_seq_id', optional=True), primary_key=True),
     schema.Column('pageid', types.Integer,
         schema.ForeignKey('page.id'), nullable=False),
+    schema.Column('ownerid', types.Integer,
+    	schema.ForeignKey('comment.id'), nullable=True),
     schema.Column('content', types.Text(), default=u''),
-    schema.Column('uname', types.Unicode(255)),
+    schema.Column('uname', types.Unicode(255), nullable=False),
     schema.Column('created', types.TIMESTAMP(), default=now()),
+    schema.Column('upvotes', types.Integer, default=0),
 )
 
 pagetag_table = schema.Table('pagetag', Base.metadata,
@@ -79,7 +85,9 @@ class Comment(object):
 class Tag(object):
     pass
 
-orm.mapper(Comment, comment_table)
+orm.mapper(Comment, comment_table, properties={
+	'replies':orm.relation(Comment)
+})
 orm.mapper(Tag, tag_table)
 orm.mapper(Page, page_table, properties={
    'comments':orm.relation(Comment, backref='page'),

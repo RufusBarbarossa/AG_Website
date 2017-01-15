@@ -2,11 +2,287 @@
 
 <%def name="title()">Forums</%def>
 
+<% maxdepth=8 %>
+<%def name="insertSpaceBorder(_class_, border)">
+	<td class="comment ${_class_} ${border}" style="width:3%"></td>
+</%def>
+
+<%def name="insertSpace()">
+	${insertSpaceBorder("comment-even", "")}
+</%def>
+
+<%def name="buildcomment(comment, depth)">
+	<% _class_ = "comment-even" if depth%2 else "comment-odd" %>
+
+	<tr class="comment ${_class_}" >
+		${insertSpaceBorder(_class_, "comment-border-left comment-border-top")}
+		<td class="comment comment-border-top" style="padding-top: 10px; width: 94%;">
+			${comment.uname} posted on
+			<a onmouseover="fullTime(this, '${comment.created.strftime('%a, %b %d %Y, %H:%M:%S %p')}')" onmouseout="shortTime(this, '${comment.created.strftime('%a, %b %d %Y')}')">
+                ${comment.created.strftime('%a, %b %d %Y')}
+            </a>
+		</td>
+		${insertSpaceBorder(_class_, "comment-border-right comment-border-top")}
+	</tr>
+
+	<tr class="comment ${_class_}">
+		${insertSpaceBorder(_class_, "comment-border-left")}
+		<td class="comment" style="padding-top: 10px;">
+			${comment.content}
+		</td>
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+
+	<tr class="comment ${_class_}">
+		${insertSpaceBorder(_class_, "comment-border-left")}
+		<td class="comment" colspan = ${2*(maxdepth-depth)+1} style="padding-top: 10px;">
+			<a href="javascript:void(0)" onclick="showreply('${comment.id}')">Reply</a>
+			<a href="javascript:void(0)" onclick="hideshow('${comment.id}')" id="${comment.id}+">
+				Show
+			</a>
+% if len(comment.replies) != 1:
+			${len(comment.replies)} child comments
+% else:
+			${len(comment.replies)} child comment
+% endif
+		</td>
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+
+	<tr class="comment ${_class_}" \>
+		<td class="comment comment-border-left" colspan=2 style="padding-top: 10px; padding-left: 25px;">
+			<a id="${comment.id}_1" style="display: none;">Replying as ${h.getUser()}</a>
+		</td>
+
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+
+	<form action="${h.url(controller='forums', action='newcomment', id=c.page.id)+'?ownerid=' +str(comment.id)}" method="post">
+	<tr class="comment ${_class_}">
+		<td class="comment comment-border-left" colspan=2 style="padding-left: 25px;">
+				<textarea id="${comment.id}_2" style="display: none;" name="content" rows=7 cols=60></textarea>
+		</td>
+
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+	<tr class="comment ${_class_}">
+		<td class="comment comment-border-left" colspan=2 style="padding-bottom: 10px; padding-left: 25px;">
+			<input id="${comment.id}_3" style="display: none;" name="submit" value="save" type="submit">
+			<button id="${comment.id}_4" type="button" href="javascript:void(0)" onclick="hidereply('${comment.id}')" style="display: none;">Cancel</button>
+		</td>
+
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+
+	</form>
+
+	<tr class="comment ${_class_}">
+		${insertSpaceBorder(_class_, "comment-border-left")}
+		<td class="comment" style="width: 94%;">
+			<table class="comment" id="${comment.id}" style="display: none;">
+				<col width="3%">
+				<col width="94%">
+				<col width="3%">
+% for reply in comment.replies:
+    		${buildcomment(reply, depth+1)}
+% endfor
+			</table>
+		</td>
+		${insertSpaceBorder(_class_, "comment-border-right")}
+	</tr>
+
+	<tr class="comment ${_class_} comment-border-bottom">
+		${insertSpaceBorder(_class_, "comment-border-left comment-border-bottom")}
+		<td class="comment comment-border-bottom">
+			<br />
+		</td>
+		${insertSpaceBorder(_class_, "comment-border-right comment-border-bottom")}
+	</tr>
+
+	<tr class="forum forum-odd" style="border:none;">
+		<td class="comment comment-border-bottom ${'comment-odd' if depth%2 else 'comment-even'}">
+		<br/>
+		</td>
+	</tr>
+</%def>
+
 <div class="w3-content" style="max-width:2000px;margin-top:46px">
 
-<h1 style="text-align: center">Welcome to Ragna's Site - Forums</h1>
-<p style="text-align: center"> Absolutely nothing is implemented, but it exists :p</p>
+<table class="forum" style="margin-top: 60px;">
 
-<p style="text-align: center"> This is the location for the forums page ${c.pageID}</p>
+<tr class="forum forum-odd forum-border-top">
+	<td class="forum" style="width: 1%" rowspan=11></td>
+	<td class="forum" style="width: 4%" rowspan=5></td>
+	<td class="forum" style="font-size: 3em; width: 94%">
+		${c.page.title}
+	</td>
+	<td class="forum" style="width: 1%" rowspan=11></td>
+</tr>
+    <tr class="forum forum-odd">
+        <td class="forum" style="text-align: left; width: 5%">
+            Submitted 
+            <a onmouseover="fullTime(this, '${c.page.posted.strftime('%a, %b %d %Y, %H:%M:%S %p')}')" onmouseout="shortTime(this, '${c.page.posted.strftime('%a, %b %d %Y')}')">
+                ${c.page.posted.strftime('%a, %b %d %Y')}
+            </a>
+% if c.page.edited:
+            (last edited 
+            <a onmouseover="fullTime(this, '${c.page.lastModified.strftime('%a, %b %d %Y, %H:%M:%S %p')}')" 
+                onmouseout="shortTime(this, '${c.page.lastModified.strftime('%a, %b %d %Y')}')">
+                ${c.page.lastModified.strftime('%a, %b %d %Y')}
+            </a>
+            ) 
+% endif
+            by ${c.page.poster}
+        </td>
+    </tr>
 
+    <tr class="forum forum-odd">
+    	<td class="forum">
+    		<div class = "text-post">
+    			<p class= "text-post">${c.page.content}</p>
+    		</div>
+    	</td>
+    </tr>
+
+    <tr class="forum forum-odd">
+        <td class="forum">${len(c.page.comments)} comments</td>
+    </tr>
+
+    <tr class="forum forum-odd" style="margin-top: 4%; margin-bottom: 4%">
+    	<td><br /></td>
+    </tr>
+
+    <tr class="forum forum-odd" style="padding-bottom: 3px; border-bottom: 1px solid grey">
+    	<td class="forum" colspan=2>
+% if c.paginator.page != 1:
+	    	<a href="${h.url(controller='forums', action='viewforum', id=c.page.id) + _search_first_}"><<</a>
+    		<a href="${h.url(controller='forums', action='viewforum', id=c.page.id) + '?page=' + str(c.paginator.page-1) + _search_}"><</a>
+% endif
+    		Showing comments ${c.paginator.first_item} through ${c.paginator.last_item} of ${c.paginator.item_count}
+% if c.paginator.page != c.paginator.last_page:
+    		<a href="${h.url(controller='forums', action='viewforum', id=c.page.id) + '?page=' + str(c.paginator.page+1) + _search_}">></a>
+    		<a href="${h.url(controller='forums', action='viewforum', id=c.page.id) + '?page=' + str(c.paginator.last_page) + _search_}">>></a>
+% endif
+		</td>
+	</tr>
+
+	<tr class="forum forum-odd">
+		<td class="forum" colspan=2>
+			<div>
+				<ul class="w3-navbar w3-grey w3-left-align" style="width: 100%;">
+  					<li class="w3-hide-large w3-opennav w3-right">
+    					<a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  					</li>
+  					<li class="w3-hide-small w3-hide-medium" style="padding-top: 12px; padding-bottom: 12px; padding-left: 24px; padding-right: 6px">Sort By:</li>
+  					<li id = "new" class="w3-hide-small w3-hide-medium">
+    					<a href="${h.url(controller='forums', action='view', id=c.page.id)}" class="w3-padding-large" style="padding-left: 6px">
+      				 		New
+    					</a>
+  					</li>
+  					<li id="best", class="w3-hide-small w3-hide-medium">
+    					<a href="${h.url(controller='forums', action='view', id=c.page.id) + '?viewtype=best'}" class="w3-padding-large">
+        					Best
+    					</a>
+  					</li>
+				</ul>
+				<script>
+					var active = "${c.active}";
+					var activeElem = document.getElementById(active);
+					activeElem.className += " w3-black";
+				</script>
+			</div>
+		</td>
+	</tr>
+
+	<tr class="forum forum-odd">
+		<td class="forum" colspan=2 style="padding-top: 10px;">
+			Commenting as ${h.getUser()}
+		</td>
+	</tr>
+
+	<form action="${h.url(controller='forums', action='newcomment', id=c.page.id)}" method="post">
+	<tr class="forum forum-odd">
+		<td class="forum" colspan=2>
+				<textarea id="content" name="content" rows=7 cols=60></textarea>
+				
+		</td>
+	</tr>
+	<tr class="forum forum-odd">
+		<td class="forum" colspan=2 style="padding-bottom: 10px;">
+			<input id="submit" name="submit" value="save" type="submit">
+		</td>
+	</tr>
+
+	</form>
+
+	<tr class="forum forum-odd">
+		<td class="forum" colspan=2>
+		<table class="comment">
+			<col width="3%">
+			<col width="94%">
+			<col width="3%">
+% for comment in c.paginator:
+    		${buildcomment(comment, 1)}
+% endfor
+		</table>
+		</td>
+	</tr>
+</table>
 </div>
+
+
+<%def name="scripts()"> 
+<!-- <script> -->
+
+function fullTime(el, modification) {
+    el.innerHTML = modification
+}
+
+function shortTime(el, modification) {
+    setTimeout(function () {
+        el.innerHTML = modification
+    }, 250);
+}
+
+function hideshow(id) {
+    var x = document.getElementById(id);
+    var plus = document.getElementById(id + "+");
+
+    if (x.style.display == 'none') {
+    	x.style.display = 'table'
+    	plus.innerHTML = "Hide"
+
+    }
+    else {
+    	x.style.display = 'none'
+    	plus.innerHTML = "Show"
+    }
+}
+
+function showreply(id) {
+	var a = document.getElementById(id + "_1");
+	var b = document.getElementById(id + "_2");
+	var c = document.getElementById(id + "_3");
+	var d = document.getElementById(id + "_4");
+
+    a.style.display = 'table';
+    b.style.display = 'table';
+    c.style.display = 'inline-table';
+    d.style.display = 'inline-table';
+}
+
+function hidereply(id) {
+	var a = document.getElementById(id + "_1");
+	var b = document.getElementById(id + "_2");
+	var c = document.getElementById(id + "_3");
+	var d = document.getElementById(id + "_4");
+
+	a.style.display = 'none';
+    b.style.display = 'none';
+    c.style.display = 'none';
+    d.style.display = 'none';	
+
+    b.innerHTML = "";
+}
+
+</%def>
